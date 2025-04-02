@@ -1,0 +1,105 @@
+class manachar{
+    
+    public :
+    vector<int> p;
+    string t;
+    string m;
+    
+    manachar(string s){
+      m=s;
+      t="";
+      for(auto x : s){
+          t+=string("#")+x;
+      }
+      
+      t+='#';
+      int n=t.length();
+      
+      p.assign(n,1);
+      
+      run_mana();
+      
+        
+    }
+    
+    void run_mana(){
+        
+       int l=1,r=1;
+      int n=t.length();
+      
+      for(int  i=1;i<t.length();i++){
+          
+          p[i]=max(1,min(r-i,p[l+r-i]));
+          
+         while(i-p[i]>=0 && i+p[i]<n && t[i-p[i]]==t[i+p[i]]){
+             p[i]++;
+         }
+         
+         if(i+p[i]>r){
+             r=i+p[i];
+             l=i-p[i];
+         }
+         
+         
+         
+          
+          
+      }
+       
+       
+        // for(auto v : p){
+        //     cout<<v<<" ";
+        // }
+        
+        
+    }
+    
+    
+     string getLongestPalindrome(string s) {
+        int maxLen = 0, centerIndex = 0;
+
+        for (int i = 0; i < p.size(); i++) {
+            if (p[i] > maxLen) {
+                maxLen = p[i];
+                centerIndex = i;
+            }
+        }
+
+        // Extract substring from original string
+        int start = (centerIndex - maxLen+1 ) / 2;
+        return s.substr(start, maxLen-1 );
+    }
+    
+    int getPalin(int cen,bool odd){
+        int pos=2*cen+1+(!odd);
+        
+        return p[pos];
+    }
+    
+    bool checkPalin(int l,int r){
+        
+        if((r-l+1)<=getPalin((l+r)/2,l%2==r%2)){
+            return 1;
+        }
+        
+        else{
+            return 0;
+        }
+        
+    }
+    
+};
+
+
+class Solution {
+  public:
+    string longestPalindrome(string &s) {
+        // code here
+        
+        manachar m(s);
+        
+        
+      return m.getLongestPalindrome(s);
+        
+    }
+};
