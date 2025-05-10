@@ -1,0 +1,55 @@
+// Create all possible permutation 
+
+#Method 1 
+
+void f(string t, unordered_set<string>& s, string num, vector<int>& vis) {
+
+        if (t.size() == num.size()) {
+            s.insert(t);
+            return;
+        }
+
+        for (int i = 0; i < num.size(); i++) {
+
+            if (!vis[i]) {
+                vis[i] = 1;
+                f(t + num[i], s, num, vis);
+                vis[i] = 0;
+            }
+        }
+    }
+
+
+
+    int countBalancedPermutations(string num) {
+
+        unordered_set<string> s;
+        int n = num.size();
+        vector<int> vis(n, 0);
+        f("", s, num, vis);
+
+    }
+
+# Method 2 (using next_permutation)
+
+
+#include <iostream>
+#include <algorithm>
+#include <set>
+using namespace std;
+
+int main() {
+    string s = "121";
+    sort(s.begin(), s.end());
+
+    set<string> perms;
+
+    do {
+        perms.insert(s);
+    } while (next_permutation(s.begin(), s.end()));
+
+    for (auto str : perms) {
+        cout << str << endl;
+    }
+}
+
